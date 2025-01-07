@@ -47,7 +47,7 @@ const DataTable: React.FC = () => {
 
   return (
     <>
-      <div className="my-2">
+      <div className="my-2 max-w-sm w-full">
         <Input
           placeholder="Search...."
           value={searchValue}
@@ -86,6 +86,12 @@ const DataTable: React.FC = () => {
                 colSpan={6}
               >
                 Something went wrong
+              </TableCell>
+            </TableRow>
+          ) : data?.data?.length === 0 ? (
+            <TableRow>
+              <TableCell className="text-center text-sm" colSpan={6}>
+                No results found
               </TableCell>
             </TableRow>
           ) : (
