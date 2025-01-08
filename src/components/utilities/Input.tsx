@@ -8,7 +8,7 @@ const Input = forwardRef<
   return (
     <input
       className={cn(
-        "bg-gray-950 text-sm w-full py-1 px-2 rounded-md border border-gray-700",
+        "bg-gray-950 text-sm w-full p-2 rounded-md border border-gray-700",
         className
       )}
       ref={ref}
