@@ -54,7 +54,7 @@ const DataTable: React.FC = () => {
           onChange={(e) => setSearchValue(e.target.value)}
         />
       </div>
-      <Table>
+      <Table className="text-nowrap">
         <TableHeader>
           <TableRow>
             <TableHead>
@@ -106,7 +106,7 @@ const DataTable: React.FC = () => {
           )}
         </TableBody>
       </Table>
-      <div className="flex items-center gap-2 justify-end text-sm my-4">
+      <div className="flex flex-wrap items-center gap-2 justify-end text-sm my-4">
         <div className="inline-flex gap-2 items-center">
           <span>Rows per page</span>
           <select

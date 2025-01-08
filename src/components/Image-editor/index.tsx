@@ -47,7 +47,7 @@ const ImageEditor: React.FC = () => {
             };
           });
         }
-        
+
         const link = document.createElement("a");
         link.download = "tShirt_design.png";
         link.href = canvas.toDataURL("image/png");
@@ -57,7 +57,7 @@ const ImageEditor: React.FC = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 my-4 w-[70%] gap-4 mx-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-2 my-4 w-full lg:w-[70%] gap-4 mx-auto">
       <div
         ref={editorRef}
         className="relative w-full max-w-[500px] aspect-[0.85/1] bg-cover bg-center border border-gray-700"

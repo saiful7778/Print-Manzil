@@ -16,7 +16,7 @@ const ImageUpload: React.FC<{ onUpload: (src: string) => void }> = ({
         type="file"
         accept="image/*"
         onChange={handleImageUpload}
-        className="block w-full file:text-white border border-gray-700 appearance-none file:p-2 file:rounded-md file:border-0 file:bg-gray-700 file:text-sm file:font-medium file:text-foreground p-2 rounded-lg"
+        className="block w-full file:text-white border border-gray-700 appearance-none file:p-1 md:text-base text-sm md:file:p-2 file:rounded-md file:border-0 file:bg-gray-700 file:text-sm file:font-medium file:text-foreground p-1 md:p-2 rounded-lg"
       />
     </div>
   );

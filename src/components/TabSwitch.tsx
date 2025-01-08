@@ -6,7 +6,7 @@ const TabSwitch: React.FC<{
   onSelect: React.Dispatch<React.SetStateAction<"table" | "imageEditor">>;
 }> = ({ select, onSelect }) => {
   return (
-    <div className="flex gap-2 items-center p-2 border border-gray-700 rounded-md">
+    <div className="flex gap-2 items-center p-1 lg:p-2 border border-gray-700 rounded md:rounded-md">
       <TabItem
         className={select === "table" ? "bg-gray-700" : ""}
         onClick={() => onSelect("table")}
@@ -30,7 +30,7 @@ const TabItem = forwardRef<
   return (
     <button
       className={cn(
-        "w-full text-center p-2 transition-colors duration-300 rounded-md hover:bg-gray-700",
+        "w-full text-center xl:text-base text-sm p-1 lg:p-2 transition-colors duration-300 rounded md:rounded-md hover:bg-gray-700",
         className
       )}
       type="button"
