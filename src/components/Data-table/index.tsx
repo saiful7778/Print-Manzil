@@ -23,7 +23,7 @@ const DataTable: React.FC = () => {
   const [pageSize, setPageSize] = useState<number>(10);
 
   const { data, isLoading, isError } = useFetch<ResponseType>(
-    `https://api.razzakfashion.com?paginate=${pageSize}&page=${currentPage}&search=${searchValue}`
+    `https://api.razzakfashion.com?paginate=${pageSize}&page=${currentPage}&search=${searchValue.toLowerCase()}`
   );
 
   const handlePageChange = (newPage: number) => {
