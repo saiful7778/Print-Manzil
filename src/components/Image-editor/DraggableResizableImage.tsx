@@ -7,6 +7,7 @@ interface DraggableResizableImageProps {
   onPositionChange: (x: number, y: number) => void;
   onSizeChange: (width: number, height: number) => void;
 }
+
 const DraggableResizableImage: React.FC<DraggableResizableImageProps> = ({
   src,
   position,
@@ -19,21 +20,34 @@ const DraggableResizableImage: React.FC<DraggableResizableImageProps> = ({
   const dragStart = useRef({ x: 0, y: 0 });
   const resizeStart = useRef({ width: 0, height: 0, x: 0, y: 0 });
 
-  // Start dragging
-  const handleDragStart = (e: React.MouseEvent) => {
+  // Type guard to check if the event is a MouseEvent
+  const isMouseEvent = (
+    e: React.MouseEvent | React.TouchEvent
+  ): e is React.MouseEvent => {
+    return "clientX" in e && "clientY" in e;
+  };
+
+  // Start dragging (Mouse or Touch)
+  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
+    const clientX = isMouseEvent(e) ? e.clientX : e.touches[0].clientX;
+    const clientY = isMouseEvent(e) ? e.clientY : e.touches[0].clientY;
+
     isDragging.current = true;
     dragStart.current = {
-      x: e.clientX - position.x,
-      y: e.clientY - position.y,
+      x: clientX - position.x,
+      y: clientY - position.y,
     };
   };
 
-  // Handle dragging
-  const handleDrag = (e: React.MouseEvent) => {
+  // Handle dragging (Mouse or Touch)
+  const handleDrag = (e: React.MouseEvent | React.TouchEvent) => {
     if (isDragging.current) {
+      const clientX = isMouseEvent(e) ? e.clientX : e.touches[0].clientX;
+      const clientY = isMouseEvent(e) ? e.clientY : e.touches[0].clientY;
+
       onPositionChange(
-        e.clientX - dragStart.current.x,
-        e.clientY - dragStart.current.y
+        clientX - dragStart.current.x,
+        clientY - dragStart.current.y
       );
     }
   };
@@ -43,23 +57,30 @@ const DraggableResizableImage: React.FC<DraggableResizableImageProps> = ({
     isDragging.current = false;
   };
 
-  // Start resizing
-  const handleResizeStart = (e: React.MouseEvent) => {
+  // Start resizing (Mouse or Touch)
+  const handleResizeStart = (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation();
+
+    const clientX = isMouseEvent(e) ? e.clientX : e.touches[0].clientX;
+    const clientY = isMouseEvent(e) ? e.clientY : e.touches[0].clientY;
+
     isResizing.current = true;
     resizeStart.current = {
       width: size.width,
       height: size.height,
-      x: e.clientX,
-      y: e.clientY,
+      x: clientX,
+      y: clientY,
     };
   };
 
-  // Handle resizing
-  const handleResize = (e: React.MouseEvent) => {
+  // Handle resizing (Mouse or Touch)
+  const handleResize = (e: React.MouseEvent | React.TouchEvent) => {
     if (isResizing.current) {
-      const deltaX = e.clientX - resizeStart.current.x;
-      const deltaY = e.clientY - resizeStart.current.y;
+      const clientX = isMouseEvent(e) ? e.clientX : e.touches[0].clientX;
+      const clientY = isMouseEvent(e) ? e.clientY : e.touches[0].clientY;
+
+      const deltaX = clientX - resizeStart.current.x;
+      const deltaY = clientY - resizeStart.current.y;
 
       onSizeChange(
         Math.max(50, resizeStart.current.width + deltaX),
@@ -87,6 +108,10 @@ const DraggableResizableImage: React.FC<DraggableResizableImageProps> = ({
       onMouseMove={handleDrag}
       onMouseUp={handleDragStop}
       onMouseLeave={handleDragStop}
+      onTouchStart={handleDragStart}
+      onTouchMove={handleDrag}
+      onTouchEnd={handleDragStop}
+      onTouchCancel={handleDragStop}
     >
       <img
         src={src}
@@ -99,6 +124,10 @@ const DraggableResizableImage: React.FC<DraggableResizableImageProps> = ({
         onMouseMove={handleResize}
         onMouseUp={handleResizeStop}
         onMouseLeave={handleResizeStop}
+        onTouchStart={handleResizeStart}
+        onTouchMove={handleResize}
+        onTouchEnd={handleResizeStop}
+        onTouchCancel={handleResizeStop}
       />
     </div>
   );
